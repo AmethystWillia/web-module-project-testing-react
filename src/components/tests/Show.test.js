@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import Show from './../Show';
 
 test('renders without errors', () => {
-    expect(badVar).toBeInTheDocument();
+    render (<Show />);
 });
 
 test('renders Loading component when prop show is null', () => {
