@@ -9,9 +9,21 @@ test("renders without error", () => {
 });
 
 test("renders the summary test passed as prop", () => {
-    expect(badVar).toBeInTheDocument();
+    // Arrange
+    render (<Episode episode={{
+        summary: 'This is a test',
+    }}/>);
+    // Act
+    const summaryText = screen.queryByText(/this is a test/i)
+    // Assert
+    expect(summaryText).toBeInTheDocument();
 });
 
 test("renders default image when image is not defined", () => {
-    expect(badVar).toBeInTheDocument();
+    // Arrange
+    render (<Episode episode={{}}/>);
+    // Act
+    const img = screen.queryByRole('img');
+    // Assert
+    expect(img).toHaveAttribute('src', 'https://i.ibb.co/2FsfXqM/stranger-things.png');
 });
