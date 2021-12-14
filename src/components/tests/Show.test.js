@@ -5,13 +5,22 @@ import userEvent from '@testing-library/user-event';
 
 import Show from './../Show';
 
+const testShow = {
+    name: 'Test',
+    summary: 'bla bla bla',
+    seasons: [
+        {id: 0, name: 'Season One', episodes: []},
+        {id: 1, name: 'Season Two', episodes: []},
+    ]
+};
+
 test('renders without errors', () => {
-    render (<Show />);
+    render (<Show show={testShow} selectedSeason={'none'}/>);
 });
 
-test('renders Loading component when prop show is null', async () => {
+test('renders Loading component when prop show is null', () => {
     // Arrange
-    render (<Show />);
+    render (<Show show={null}/>);
     // Act
     const loading = screen.queryByText(/fetching data/i);
     const shouldNotShow = screen.queryByText(/select a season/i);
@@ -21,30 +30,19 @@ test('renders Loading component when prop show is null', async () => {
 });
 
 test('renders same number of options seasons are passed in', () => {
+    
     // Arrange
-    render (<Show selectedSeason={1} show={{
-        name: 'test',
-        image: null,
-        summary: 'test',
-        seasons: [
-            {id:1, name: "Season 1", episodes: [{
-                id: 1,
-                image: 'test.url',
-                name: 'test',
-                season: 1,
-                number: 42,
-                summary: 'test',
-                runtime: 42,
-            }]},
-        ]
-    }}/>);
+    render (<Show show={testShow} selectedSeason={'none'}/>);
     // Act
     const seasosnOptions = screen.queryAllByTestId('season-option')
     // Assert
-    expect(seasosnOptions).toHaveLength(1);
+    expect(seasosnOptions).toHaveLength(2);
 });
 
 test('handleSelect is called when an season is selected', () => {
+    // Arrange
+    // Act
+    // Assert
     expect(badVar).toBeInTheDocument();
 });
 
