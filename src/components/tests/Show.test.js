@@ -9,13 +9,39 @@ test('renders without errors', () => {
     render (<Show />);
 });
 
-test('renders Loading component when prop show is null', () => {
-    expect(badVar).toBeInTheDocument();
+test('renders Loading component when prop show is null', async () => {
+    // Arrange
+    render (<Show />);
+    // Act
+    const loading = screen.queryByText(/fetching data/i);
+    const shouldNotShow = screen.queryByText(/select a season/i);
+    // Assert
+    expect(loading).toBeInTheDocument();
+    expect(shouldNotShow).not.toBeInTheDocument();
 });
 
-
 test('renders same number of options seasons are passed in', () => {
-    expect(badVar).toBeInTheDocument();
+    // Arrange
+    render (<Show selectedSeason={1} show={{
+        name: 'test',
+        image: null,
+        summary: 'test',
+        seasons: [
+            {id:1, name: "Season 1", episodes: [{
+                id: 1,
+                image: 'test.url',
+                name: 'test',
+                season: 1,
+                number: 42,
+                summary: 'test',
+                runtime: 42,
+            }]},
+        ]
+    }}/>);
+    // Act
+    const seasosnOptions = screen.queryAllByTestId('season-option')
+    // Assert
+    expect(seasosnOptions).toHaveLength(1);
 });
 
 test('handleSelect is called when an season is selected', () => {
