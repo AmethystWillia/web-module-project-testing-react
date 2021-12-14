@@ -40,12 +40,28 @@ test('renders same number of options seasons are passed in', () => {
 });
 
 test('handleSelect is called when an season is selected', () => {
+    const mockHandleSelect = jest.fn();
     // Arrange
+    render (<Show show={testShow} selectedSeason={'none'} handleSelect={mockHandleSelect}/>);
     // Act
+    const seasosnOption = screen.queryByLabelText(/select a season/i)
+    userEvent.selectOptions(seasosnOption, ['1']);
     // Assert
-    expect(badVar).toBeInTheDocument();
+    expect(mockHandleSelect).toBeCalled();
 });
 
-test('component renders when no seasons are selected and when rerenders with a season passed in', () => {
-    expect(badVar).toBeInTheDocument();
+test('component renders when no seasons are selected and then rerenders with a season passed in', () => {
+    // Arrange 1
+    const { rerender } = render (<Show show={testShow} selectedSeason={'none'}/>);
+    // Act 1
+    let episodes = screen.queryByTestId('episodes-container')
+    // Assert 1
+    expect(episodes).not.toBeInTheDocument();
+
+    // Arrange 2
+    rerender (<Show show={testShow} selectedSeason={1}/>)
+    //Act 2
+    let episodesCheck = screen.queryByTestId('episodes-container')
+    // Assert 2
+    expect(episodesCheck).toBeInTheDocument();
 });

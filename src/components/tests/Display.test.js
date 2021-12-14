@@ -17,9 +17,7 @@ test('renders Show component when the button is clicked ', () => {
     const button = screen.getByRole('button');
     userEvent.click(button);
 
-    const showDisplay = screen.queryByTestId('show-container');
     // Assert
-    expect(showDisplay).toBeInTheDocument();
 });
 
 test('renders show season options matching your data when the button is clicked', () => {
